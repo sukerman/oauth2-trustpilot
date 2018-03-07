@@ -2,6 +2,7 @@
 
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use League\OAuth2\Client\Provider\GenericResourceOwner;
 use League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
@@ -10,6 +11,18 @@ use Psr\Http\Message\ResponseInterface;
 class Trustpilot extends AbstractProvider
 {
     use BearerAuthorizationTrait;
+
+    const ACCESS_TOKEN_RESOURCE_OWNER_ID = 'app_enduser';
+
+    /**
+     * @var string
+     */
+    protected $username;
+
+    /**
+     * @var string
+     */
+    protected $password;
 
     /**
      * Returns the base URL for authorizing a client.
@@ -20,7 +33,7 @@ class Trustpilot extends AbstractProvider
      */
     public function getBaseAuthorizationUrl()
     {
-        // TODO: Implement getBaseAuthorizationUrl() method.
+        return '';
     }
 
     /**
@@ -33,7 +46,22 @@ class Trustpilot extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params)
     {
-        // TODO: Implement getBaseAccessTokenUrl() method.
+        return 'https://api.trustpilot.com/v1/oauth/oauth-business-users-for-applications/accesstoken';
+    }
+
+    /**
+     * Builds request options used for requesting an access token.
+     *
+     * @param  array $params
+     * @return array
+     */
+    protected function getAccessTokenOptions(array $params)
+    {
+        $clientId = array_pull($params, 'client_id');
+        $clientSecret = array_pull($params, 'client_secret');
+        $options = parent::getAccessTokenOptions($params);
+        $options['headers']['Authorization'] = base64_encode($clientId.':'.$clientSecret);
+        return $options;
     }
 
     /**
@@ -44,7 +72,23 @@ class Trustpilot extends AbstractProvider
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        // TODO: Implement getResourceOwnerDetailsUrl() method.
+        return 'https://api.trustpilot.com/v1/business-units/'.$token->getResourceOwnerId().'/profileinfo';
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
     }
 
     /**
@@ -57,7 +101,7 @@ class Trustpilot extends AbstractProvider
      */
     protected function getDefaultScopes()
     {
-        // TODO: Implement getDefaultScopes() method.
+        return [];
     }
 
     /**
@@ -70,7 +114,7 @@ class Trustpilot extends AbstractProvider
      */
     protected function checkResponse(ResponseInterface $response, $data)
     {
-        // TODO: Implement checkResponse() method.
+        return;
     }
 
     /**
@@ -83,6 +127,6 @@ class Trustpilot extends AbstractProvider
      */
     protected function createResourceOwner(array $response, AccessToken $token)
     {
-        // TODO: Implement createResourceOwner() method.
+        return new GenericResourceOwner($response, $token->getResourceOwnerId());
     }
 }
