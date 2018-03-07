@@ -46,7 +46,16 @@ class Trustpilot extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params)
     {
-        return 'https://api.trustpilot.com/v1/oauth/oauth-business-users-for-applications/accesstoken';
+        $url = 'https://api.trustpilot.com/v1/oauth/oauth-business-users-for-applications/';
+        if (array_key_exists('grant_type', $params) && $params['grant_type'] == 'refresh_token')
+        {
+            $url .= 'refresh';
+        }
+        else
+        {
+            $url .= 'accesstoken';
+        }
+        return $url;
     }
 
     /**
