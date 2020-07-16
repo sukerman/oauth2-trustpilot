@@ -26,7 +26,7 @@
   },
   "autoload": {
     "psr-4": {
-      "NeilCrookes\\OAuth2\\Client\\": "src/"
+      "Sukerman\\OAuth2\\Client\\": "src/"
     }
   }
 }
