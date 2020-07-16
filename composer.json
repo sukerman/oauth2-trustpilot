@@ -1,5 +1,5 @@
 {
-  "name": "neilcrookes/oauth2-trustpilot",
+  "name": "sukerman/oauth2-trustpilot",
   "description": "Trustpilot OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
   "keywords": [
     "oauth",
@@ -16,8 +16,8 @@
   "license": "MIT",
   "authors": [
     {
-      "name": "Neil Crookes",
-      "email": "neil@crook.es"
+      "name": "Jack Sukerman",
+      "email": "info@miappi.com"
     }
   ],
   "require": {
