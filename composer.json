@@ -1,5 +1,5 @@
 {
-  "name": "neilcrookes/oauth2-trustpilot",
+  "name": "sukerman/oauth2-trustpilot",
   "description": "Trustpilot OAuth 2.0 Client Provider for The PHP League OAuth2-Client",
   "keywords": [
     "oauth",
@@ -22,11 +22,11 @@
   ],
   "require": {
     "php": ">=5.6.0",
-    "league/oauth2-client": "^2.0"
+    "league/oauth2-client": "^1.4"
   },
   "autoload": {
     "psr-4": {
-      "NeilCrookes\\OAuth2\\Client\\": "src/"
+      "Sukerman\\OAuth2\\Client\\": "src/"
     }
   }
 }
